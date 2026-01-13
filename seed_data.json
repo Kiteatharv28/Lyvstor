@@ -1,0 +1,194 @@
+{
+  "categories": [
+    {
+      "id": "gown",
+      "name": "Gown",
+      "createdAt": "2024-01-12T00:00:00Z"
+    },
+    {
+      "id": "kurti_sets",
+      "name": "Kurti Sets",
+      "createdAt": "2024-01-12T00:00:00Z"
+    },
+    {
+      "id": "kurta_sets",
+      "name": "Kurta Sets",
+      "createdAt": "2024-01-12T00:00:00Z"
+    },
+    {
+      "id": "coord_sets",
+      "name": "Coord Sets",
+      "createdAt": "2024-01-12T00:00:00Z"
+    }
+  ],
+  "products": [
+    {
+      "id": "prod_001",
+      "title": "Premium Gown",
+      "description": "Elegant premium gown for special occasions",
+      "price": 1299,
+      "originalPrice": 1599,
+      "discount": "18%",
+      "categoryId": "gown",
+      "stockQty": 15,
+      "isActive": true,
+      "imageUrls": ["assets/card1.png", "assets/card2.png"],
+      "createdAt": "2024-01-10T00:00:00Z",
+      "updatedAt": "2024-01-12T00:00:00Z"
+    },
+    {
+      "id": "prod_002",
+      "title": "Casual Kurti Set",
+      "description": "Comfortable casual kurti set for daily wear",
+      "price": 799,
+      "originalPrice": 999,
+      "discount": "20%",
+      "categoryId": "kurti_sets",
+      "stockQty": 25,
+      "isActive": true,
+      "imageUrls": ["assets/card1.png"],
+      "createdAt": "2024-01-09T00:00:00Z",
+      "updatedAt": "2024-01-12T00:00:00Z"
+    },
+    {
+      "id": "prod_003",
+      "title": "Festive Kurta Set",
+      "description": "Beautiful festive kurta set with traditional design",
+      "price": 1499,
+      "originalPrice": 1899,
+      "discount": "21%",
+      "categoryId": "kurta_sets",
+      "stockQty": 10,
+      "isActive": true,
+      "imageUrls": ["assets/card2.png"],
+      "createdAt": "2024-01-08T00:00:00Z",
+      "updatedAt": "2024-01-12T00:00:00Z"
+    },
+    {
+      "id": "prod_004",
+      "title": "Modern Coord Set",
+      "description": "Trendy modern coordinate set",
+      "price": 899,
+      "originalPrice": 1099,
+      "discount": "18%",
+      "categoryId": "coord_sets",
+      "stockQty": 20,
+      "isActive": true,
+      "imageUrls": ["assets/card1.png", "assets/card2.png"],
+      "createdAt": "2024-01-07T00:00:00Z",
+      "updatedAt": "2024-01-12T00:00:00Z"
+    },
+    {
+      "id": "prod_005",
+      "title": "Luxury Gown",
+      "description": "Luxury designer gown for premium customers",
+      "price": 1999,
+      "originalPrice": 2499,
+      "discount": "20%",
+      "categoryId": "gown",
+      "stockQty": 8,
+      "isActive": true,
+      "imageUrls": ["assets/card2.png"],
+      "createdAt": "2024-01-06T00:00:00Z",
+      "updatedAt": "2024-01-12T00:00:00Z"
+    },
+    {
+      "id": "prod_006",
+      "title": "Budget Kurti",
+      "description": "Affordable kurti set for budget-conscious buyers",
+      "price": 499,
+      "originalPrice": 699,
+      "discount": "28%",
+      "categoryId": "kurti_sets",
+      "stockQty": 30,
+      "isActive": true,
+      "imageUrls": ["assets/card1.png"],
+      "createdAt": "2024-01-05T00:00:00Z",
+      "updatedAt": "2024-01-12T00:00:00Z"
+    },
+    {
+      "id": "prod_007",
+      "title": "Ethnic Kurta",
+      "description": "Traditional ethnic kurta with modern touch",
+      "price": 1099,
+      "originalPrice": 1399,
+      "discount": "21%",
+      "categoryId": "kurta_sets",
+      "stockQty": 12,
+      "isActive": true,
+      "imageUrls": ["assets/card1.png", "assets/card2.png"],
+      "createdAt": "2024-01-04T00:00:00Z",
+      "updatedAt": "2024-01-12T00:00:00Z"
+    },
+    {
+      "id": "prod_008",
+      "title": "Party Coord Set",
+      "description": "Glamorous coordinate set for parties",
+      "price": 1199,
+      "originalPrice": 1499,
+      "discount": "20%",
+      "categoryId": "coord_sets",
+      "stockQty": 5,
+      "isActive": true,
+      "imageUrls": ["assets/card2.png"],
+      "createdAt": "2024-01-03T00:00:00Z",
+      "updatedAt": "2024-01-12T00:00:00Z"
+    },
+    {
+      "id": "prod_009",
+      "title": "Summer Gown",
+      "description": "Light and breezy summer gown",
+      "price": 999,
+      "originalPrice": 1299,
+      "discount": "23%",
+      "categoryId": "gown",
+      "stockQty": 18,
+      "isActive": true,
+      "imageUrls": ["assets/card1.png"],
+      "createdAt": "2024-01-02T00:00:00Z",
+      "updatedAt": "2024-01-12T00:00:00Z"
+    },
+    {
+      "id": "prod_010",
+      "title": "Office Kurti",
+      "description": "Professional office kurti set",
+      "price": 749,
+      "originalPrice": 999,
+      "discount": "25%",
+      "categoryId": "kurti_sets",
+      "stockQty": 22,
+      "isActive": true,
+      "imageUrls": ["assets/card2.png"],
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-12T00:00:00Z"
+    },
+    {
+      "id": "prod_011",
+      "title": "Wedding Kurta",
+      "description": "Elegant wedding kurta set",
+      "price": 1699,
+      "originalPrice": 2099,
+      "discount": "19%",
+      "categoryId": "kurta_sets",
+      "stockQty": 7,
+      "isActive": true,
+      "imageUrls": ["assets/card1.png", "assets/card2.png"],
+      "createdAt": "2023-12-31T00:00:00Z",
+      "updatedAt": "2024-01-12T00:00:00Z"
+    },
+    {
+      "id": "prod_012",
+      "title": "Casual Coord",
+      "description": "Casual everyday coordinate set",
+      "price": 649,
+      "originalPrice": 899,
+      "discount": "27%",
+      "categoryId": "coord_sets",
+      "stockQty": 28,
+      "isActive": true,
+      "imageUrls": ["assets/card1.png"],
+      "createdAt": "2023-12-30T00:00:00Z",
+      "updatedAt": "2024-01-12T00:00:00Z"
+    }
+  ]
+}

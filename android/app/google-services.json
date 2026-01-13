@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "167483585714",
+    "project_id": "lvystor",
+    "storage_bucket": "lvystor.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167483585714:android:021138f2f3959e5a9285ab",
+        "android_client_info": {
+          "package_name": "com.example.lvystor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqw92bjI4CcDOIBUNMPyEE5KuIQSwTFTA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
