@@ -165,8 +165,8 @@ Favorites Screen
 - id: String
 - title: String
 - description: String
-- price: String
-- originalPrice: String
+- price: int
+- originalPrice: int
 - discount: String
 - category: String
 - inStock: bool
@@ -208,35 +208,426 @@ Favorites Screen
 
 ## 🔐 Firebase Setup
 
+### Step 1: Create Firebase Project
+1. Go to [Firebase Console](https://console.firebase.google.com/)
+2. Click "Create a new project"
+3. Enter project name: "Lvystor"
+4. Enable Google Analytics (optional)
+5. Click "Create project"
+
+### Step 2: Register Apps
+
+**For Android:**
+1. Click "Android" icon in Firebase console
+2. Enter package name: `com.example.lvystor`
+3. Enter app nickname: `Lvystor Android`
+4. Download `google-services.json`
+5. Place it in `android/app/` directory
+
+**For iOS:**
+1. Click "iOS" icon in Firebase console
+2. Enter bundle ID: `com.example.lvystor`
+3. Enter app nickname: `Lvystor iOS`
+4. Download `GoogleService-Info.plist`
+5. Place it in `ios/Runner/` directory (add to Xcode)
+
+### Step 3: Update Firebase Options
+1. Open `lib/firebase_options.dart`
+2. Replace placeholder values with your Firebase credentials:
+```dart
+static const FirebaseOptions android = FirebaseOptions(
+  apiKey: 'YOUR_ANDROID_API_KEY',
+  appId: '1:YOUR_PROJECT_NUMBER:android:YOUR_APP_ID',
+  messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
+  projectId: 'your-project-id',
+  databaseURL: 'https://your-project-id.firebaseio.com',
+  storageBucket: 'your-project-id.appspot.com',
+);
+
+static const FirebaseOptions ios = FirebaseOptions(
+  apiKey: 'YOUR_IOS_API_KEY',
+  appId: '1:YOUR_PROJECT_NUMBER:ios:YOUR_APP_ID',
+  messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
+  projectId: 'your-project-id',
+  databaseURL: 'https://your-project-id.firebaseio.com',
+  storageBucket: 'your-project-id.appspot.com',
+);
+```
+
+### Step 4: Enable Firestore Database
+1. In Firebase console, go to "Firestore Database"
+2. Click "Create database"
+3. Select "Start in test mode" (for development)
+4. Choose region closest to you
+5. Click "Enable"
+
+### Step 5: Enable Authentication
+1. Go to "Authentication" in Firebase console
+2. Click "Get started"
+3. Enable "Email/Password" provider
+4. Click "Enable" and "Save"
+
+### Step 6: Deploy Security Rules
+1. Go to "Firestore Database" → "Rules" tab
+2. Replace the default rules with the content from `firestore.rules`
+3. Click "Publish"
+
+## 📊 Firestore Collections & Data Model
+
 ### Collections Structure
+
 ```
-categories/
-├── gown/
-├── kurti_sets/
-├── kurta_sets/
-└── coord_sets/
-
-products/
-├── prod_001/
-├── prod_002/
-└── ...
-
-users/
-├── {userId}/
-│   ├── cart/
-│   │   └── {productId}/
-│   ├── addresses/
-│   │   └── {addressId}/
-│   ├── favorites/
-│   │   └── {productId}/
-│   └── orders/
-│       └── {orderId}/
+firestore/
+├── categories/
+│   ├── gown/
+│   │   ├── name: "Gown"
+│   │   └── createdAt: timestamp
+│   ├── kurti_sets/
+│   │   ├── name: "Kurti Sets"
+│   │   └── createdAt: timestamp
+│   ├── kurta_sets/
+│   │   ├── name: "Kurta Sets"
+│   │   └── createdAt: timestamp
+│   └── coord_sets/
+│       ├── name: "Coord Sets"
+│       └── createdAt: timestamp
+│
+├── products/
+│   ├── prod_001/
+│   │   ├── title: "Premium Gown"
+│   │   ├── description: "Elegant premium gown for special occasions"
+│   │   ├── price: 1299
+│   │   ├── originalPrice: 1599
+│   │   ├── discount: "18%"
+│   │   ├── category: "Gown"
+│   │   ├── categoryId: "gown"
+│   │   ├── stockQty: 15
+│   │   ├── inStock: true
+│   │   ├── image: "assets/card1.png"
+│   │   ├── createdAt: timestamp
+│   │   └── updatedAt: timestamp
+│   └── prod_002/
+│       └── ... (similar structure)
+│
+└── users/
+    └── {userId}/
+        ├── cart/
+        │   └── {productId}/
+        │       ├── productId: "prod_001"
+        │       ├── title: "Premium Gown"
+        │       ├── price: "1299"
+        │       ├── quantity: 2
+        │       ├── maxStock: 15
+        │       ├── image: "assets/card1.png"
+        │       └── updatedAt: timestamp
+        │
+        ├── addresses/
+        │   └── {addressId}/
+        │       ├── name: "Home"
+        │       ├── phone: "9876543210"
+        │       ├── line1: "123 Main Street, Apartment 4B"
+        │       ├── city: "Mumbai"
+        │       ├── pincode: "400001"
+        │       ├── isDefault: true
+        │       └── updatedAt: timestamp
+        │
+        ├── favorites/
+        │   └── {productId}/
+        │       ├── productId: "prod_001"
+        │       └── addedAt: timestamp
+        │
+        └── orders/
+            └── {orderId}/
+                ├── userId: "{userId}"
+                ├── items: [CartItem]
+                ├── totalAmount: 2598
+                ├── status: "pending"
+                ├── addressId: "{addressId}"
+                ├── paymentMethod: "credit_card"
+                ├── createdAt: timestamp
+                └── updatedAt: timestamp
 ```
 
-### Security Rules
+### Data Models
+
+#### Product
+```json
+{
+  "id": "prod_001",
+  "title": "Premium Gown",
+  "description": "Elegant premium gown for special occasions",
+  "price": 1299,
+  "originalPrice": 1599,
+  "discount": "18%",
+  "category": "Gown",
+  "categoryId": "gown",
+  "stockQty": 15,
+  "inStock": true,
+  "image": "assets/card1.png",
+  "createdAt": "2024-01-12T10:30:00Z",
+  "updatedAt": "2024-01-12T10:30:00Z"
+}
+```
+
+#### Cart Item
+```json
+{
+  "productId": "prod_001",
+  "title": "Premium Gown",
+  "price": "1299",
+  "quantity": 2,
+  "maxStock": 15,
+  "image": "assets/card1.png",
+  "updatedAt": "2024-01-12T10:30:00Z"
+}
+```
+
+#### Address
+```json
+{
+  "name": "Home",
+  "phone": "9876543210",
+  "line1": "123 Main Street, Apartment 4B",
+  "city": "Mumbai",
+  "pincode": "400001",
+  "isDefault": true,
+  "updatedAt": "2024-01-12T10:30:00Z"
+}
+```
+
+#### Order
+```json
+{
+  "userId": "{userId}",
+  "items": [
+    {
+      "productId": "prod_001",
+      "title": "Premium Gown",
+      "price": "1299",
+      "quantity": 2,
+      "maxStock": 15,
+      "image": "assets/card1.png"
+    }
+  ],
+  "totalAmount": 2598,
+  "status": "pending",
+  "addressId": "{addressId}",
+  "paymentMethod": "credit_card",
+  "createdAt": "2024-01-12T10:30:00Z",
+  "updatedAt": "2024-01-12T10:30:00Z"
+}
+```
+
+## 🌱 Seeding Data
+
+### Automatic Seed Data
+
+The app automatically seeds data on first user login:
+
+**Categories (4):**
+- Gown
+- Kurti Sets
+- Kurta Sets
+- Coord Sets
+
+**Products (12):**
+- 3 products per category
+- Complete product information
+- Product images
+- Pricing and discounts
+
+**Demo Addresses (3):**
+- Home (Mumbai)
+- Office (Bangalore)
+- Parents House (Delhi)
+
+### How Seed Data Works
+
+1. **First App Launch**
+   - User logs in
+   - App checks if products exist in Firestore
+   - If empty → Automatically seeds all data
+   - If exists → Skips seeding (no duplicates)
+
+2. **Manual Seeding**
+   - Go to Profile → Address
+   - Click "Add Demo Addresses" button
+   - 3 demo addresses added to your account
+
+3. **Seed Data Service**
+   - Located in `lib/services/seed_data_service.dart`
+   - `seedAllData()` - Seeds categories and products
+   - `seedCategories()` - Seeds 4 categories
+   - `seedProducts()` - Seeds 12 products
+   - `clearAllData()` - Clears all data (for testing)
+
+### Seed Data Details
+
+**Categories:**
+```dart
+[
+  {'id': 'gown', 'name': 'Gown'},
+  {'id': 'kurti_sets', 'name': 'Kurti Sets'},
+  {'id': 'kurta_sets', 'name': 'Kurta Sets'},
+  {'id': 'coord_sets', 'name': 'Coord Sets'},
+]
+```
+
+**Products Sample:**
+```dart
+{
+  'title': 'Premium Gown',
+  'description': 'Elegant premium gown for special occasions',
+  'price': 1299,
+  'originalPrice': 1599,
+  'discount': '18%',
+  'category': 'Gown',
+  'categoryId': 'gown',
+  'stockQty': 15,
+  'inStock': true,
+  'image': 'assets/card1.png',
+}
+```
+
+**Demo Addresses:**
+```dart
+[
+  {
+    'name': 'Home',
+    'phone': '9876543210',
+    'line1': '123 Main Street, Apartment 4B',
+    'city': 'Mumbai',
+    'pincode': '400001',
+  },
+  {
+    'name': 'Office',
+    'phone': '9876543211',
+    'line1': '456 Business Park, Suite 200',
+    'city': 'Bangalore',
+    'pincode': '560001',
+  },
+  {
+    'name': 'Parents House',
+    'phone': '9876543212',
+    'line1': '789 Residential Colony, House No. 42',
+    'city': 'Delhi',
+    'pincode': '110001',
+  },
+]
+```
+
+## 🔐 Security Rules Deployment
+
+### Security Rules Overview
+
+The app uses Firestore security rules to protect user data:
+
+**Key Rules:**
 - Users can only read/write their own data
 - Categories and products are readable by authenticated users
 - Write operations restricted to backend only
+- Orders cannot be deleted
+- Cart and addresses are user-specific
+
+### Security Rules Content
+
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if user owns the resource
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    // ===== CATEGORIES =====
+    match /categories/{categoryId} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+    
+    // ===== PRODUCTS =====
+    match /products/{productId} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+    
+    // ===== USERS =====
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+      
+      match /cart/{productId} {
+        allow read, write: if isOwner(userId);
+      }
+      
+      match /addresses/{addressId} {
+        allow read, write: if isOwner(userId);
+      }
+      
+      match /favorites/{productId} {
+        allow read, write: if isOwner(userId);
+      }
+      
+      match /orders/{orderId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && request.resource.data.userId == userId;
+        allow update: if isOwner(userId) && resource.data.userId == userId;
+        allow delete: if false;
+      }
+    }
+    
+    // ===== ORDERS (Global Collection) =====
+    match /orders/{orderId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow delete: if false;
+    }
+  }
+}
+```
+
+### Deploying Rules
+
+1. **Via Firebase Console:**
+   - Go to Firestore Database → Rules tab
+   - Copy content from `firestore.rules`
+   - Paste into the rules editor
+   - Click "Publish"
+
+2. **Via Firebase CLI:**
+```bash
+# Install Firebase CLI
+npm install -g firebase-tools
+
+# Login to Firebase
+firebase login
+
+# Deploy rules
+firebase deploy --only firestore:rules
+```
+
+3. **Via Flutter App:**
+   - Rules are automatically enforced by Firestore
+   - No additional configuration needed in app
+
+### Testing Rules
+
+1. **Test Mode (Development):**
+   - Start in test mode for development
+   - Rules allow read/write for 30 days
+   - Switch to production rules before deployment
+
+2. **Production Mode:**
+   - Deploy security rules from `firestore.rules`
+   - Only authenticated users can access data
+   - Users can only access their own data
 
 ## 🚀 Getting Started
 
@@ -244,6 +635,7 @@ users/
 - Flutter SDK (latest version)
 - Firebase project
 - Android Studio or Xcode
+- Git
 
 ### Installation
 
@@ -258,12 +650,7 @@ cd lvystor
 flutter pub get
 ```
 
-3. **Configure Firebase**
-- Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
-- Download configuration files:
-  - Android: `google-services.json` → `android/app/`
-  - iOS: `GoogleService-Info.plist` → `ios/Runner/`
-- Update `lib/firebase_options.dart` with your credentials
+3. **Configure Firebase** (follow Firebase Setup section above)
 
 4. **Run the app**
 ```bash
@@ -327,27 +714,6 @@ flutter run
 - Error handling
 - Toast notifications
 
-## 📦 Seed Data
-
-The app automatically seeds initial data on first launch:
-
-### Categories (4)
-- Gown
-- Kurti Sets
-- Kurta Sets
-- Coord Sets
-
-### Products (12)
-- 3 products per category
-- Complete product information
-- Product images
-- Pricing and discounts
-
-### Demo Addresses (3)
-- Home (Mumbai)
-- Office (Bangalore)
-- Parents House (Delhi)
-
 ## 🔄 State Management
 
 Using Provider pattern for state management:
@@ -388,11 +754,18 @@ Data survives app restart and hot reload.
 - Check Firebase project is active
 - Verify Firestore collections are created
 - Check user is authenticated
+- Ensure security rules allow write access for seed data
 
 ### Address Validation Errors
 - Phone must be exactly 10 digits
 - Pincode must be exactly 6 digits
 - All fields are required
+
+### Products Not Showing in Category Screen
+- Verify seed data has been loaded
+- Check Firestore collections exist
+- Ensure ProductProvider is loading data
+- Check security rules allow read access
 
 ## 📝 Development Notes
 
